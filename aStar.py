@@ -109,7 +109,13 @@ def h(p1, p2):
     x2, y2 = p2
     return abs(x1 - x2) + abs(y1 - y2)
 
+# A faster function that uses the Pythagorean theorem to calculate the distance, which allows users to customize.
+def h2(p1, p2):
+    x1, y1 = p1
+    x2, y2 = p2
+    return (x1 - x2) ** 2 + (y1 - y2) ** 2
 
+# Make grid on the game board
 def make_grid(rows, width):
     grid = []
     gap = width // rows  # width is the width of our entire grid, rows is the number of rows in the grid
@@ -120,7 +126,7 @@ def make_grid(rows, width):
             grid[i].append(spot)  # grid[i] is the grid we just created in line 90
     return grid
 
-
+# Draw grids to create blocks on the board
 def draw_grid(win, rows, width):
     gap = width // rows
     for i in range(rows):
@@ -148,7 +154,7 @@ def get_clicked_pos(pos, rows, width):
     col = j // gap
     return row, col
 
-
+# Path showing function when the closest path has been found
 def reconstruct_path(came_from, current, draw):
     while current in came_from:
         current = came_from[current]
@@ -156,14 +162,15 @@ def reconstruct_path(came_from, current, draw):
         draw()
 
 
+# Path finding algorithm
 def algorithm(draw, grid, start, end):
     count = 0
     open_set = PriorityQueue()
     open_set.put((0, count, start))
     came_from = {}
-    g_score = {spot: float("inf") for row in grid for spot in row}
+    g_score = {spot: float("inf") for row in grid for spot in row}  # Map of the distances from where the spot is to the starting point
     g_score[start] = 0
-    f_score = {spot: float("inf") for row in grid for spot in row}
+    f_score = {spot: float("inf") for row in grid for spot in row}  # Map of the distances from where the spot is to the destination
     f_score[start] = h(start.get_pos(), end.get_pos())
 
     open_set_hash = {start}
@@ -174,7 +181,7 @@ def algorithm(draw, grid, start, end):
                 pygame.quit()
 
         current = open_set.get()[2]
-        open_set_hash.remove(current)
+        open_set_hash.remove(current)  # This line is for memory release
 
         if current == end:
             reconstruct_path(came_from, end, draw)
