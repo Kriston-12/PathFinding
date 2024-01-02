@@ -5,6 +5,12 @@ Then users could build walls anywhere on the board by clicking on the blocks.
 When users press the key SPACE, the game will start finding the closest path from the starting position to the destination.
 Users could press key C to restart the game. 
 
+https://github.com/Kriston-12/PathFinding/assets/108577541/dd6f1c79-e858-492c-8ffd-70d83f580b71
+
 Require:
 Python 3
 Pygame
+
+
+
+
